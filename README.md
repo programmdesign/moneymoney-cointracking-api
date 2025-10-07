@@ -9,4 +9,3 @@ MoneyMoney extensions to retrieve CoinTracking balances via CoinTracking API.
 - Add a new account to MoneyMoney > Select "Other" > Select "CoinTracking API".
 - Enter your CoinTracking API key as "Username".
 - Enter your CoinTracking API secret as "Password".
-- Click on "Save password".
