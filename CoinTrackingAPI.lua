@@ -1,12 +1,12 @@
--- Inofficial Cointracking Extension (www.cointracking.info) for MoneyMoney
+-- Inofficial CoinTracking Extension (www.cointracking.info) for MoneyMoney
 -- Version 1.0
 -- License: MIT
 -- Author: Christoph Neumann (@programmdesign), Gemini, ChatGPT
 -- 
--- Fetches gains/balances from the Cointracking API and displays them as a portfolio.
+-- Fetches gains/balances from the CoinTracking API and displays them as a portfolio.
 --
--- Username: Cointracking API Key
--- Password: Cointracking API Secret
+-- Username: CoinTracking API Key
+-- Password: CoinTracking API Secret
 
 WebBanking{
     version     = 1.0,
@@ -80,7 +80,7 @@ end
 -- ## API
 -- ###########################################################################
 
-local function CointrackingRequest(args)
+local function CoinTrackingRequest(args)
   local nonce = tostring(math.floor(MM.time() * 1000))
   local body  = "method=" .. args.method .. "&nonce=" .. nonce
   local sign  = ToHex(MM.hmac512(apiSecret, body))
@@ -124,7 +124,7 @@ end
 -- ###########################################################################
 
 function GetBalances()
-  local resp = CointrackingRequest({ method = "getGains" }):dictionary()["gains"]
+  local resp = CoinTrackingRequest({ method = "getGains" }):dictionary()["gains"]
 
   local accountCurrency = ToString(resp["account_currency"])
   if accountCurrency == "" then accountCurrency = "EUR" end
