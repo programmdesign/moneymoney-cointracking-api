@@ -333,7 +333,6 @@ function GetBalances()
   for k, v in pairs(resp) do
     local balance = {}
     balance["name"] = (cryptoCurrencies[ToString(v["coin"])] or ToString(v["coin"])) .. " (" .. v["coin"] .. ")"
-    balance["securityNumber"] = ToString(v["coin"]) 
     balance["quantity"] = ToNumber(v["amount"])
     balance["purchasePrice"] = ToNumber(v["cost_per_unit"])
     balance["price"] = ToNumber(v["current_price"])
