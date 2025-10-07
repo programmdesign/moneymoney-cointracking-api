@@ -1,4 +1,4 @@
-# MoneyMoney CoinTracking API Extension
+# MoneyMoney Extension: CoinTracking API 
 
 MoneyMoney extensions to retrieve CoinTracking balances via CoinTracking API
 
