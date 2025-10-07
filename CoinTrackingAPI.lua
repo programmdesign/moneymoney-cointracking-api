@@ -16,8 +16,14 @@ WebBanking{
 
 }
 
+-- ###########################################################################
+-- ## Variable declaration
+-- ###########################################################################
+
 local apiKey
 local apiSecret
+
+-- Dictionary for mapping CoinTrackings crypto currency symbols to cryptocurrency names
 local cryptoCurrencies = {
     ["1INCH"] = "1inch Network",
     ["AAVE"] = "Aave",
@@ -216,12 +222,12 @@ local cryptoCurrencies = {
 -- ## Helpers
 -- ###########################################################################
 
--- Hex-Encoder (MM.hmac512 liefert Binärdaten)
+-- Encode MM.hmac512 binary data to hexadecimal data
 local function ToHex(bin)
   return (bin:gsub(".", function(c) return string.format("%02x", string.byte(c)) end))
 end
 
--- Sichere String-/Zahl-Konvertierung (funktioniert für Node, String, Number)
+-- Safe String and number conversion for nodes, strings, numbers
 local function ToString(v)
   if v == nil then return "" end
   local t = type(v)
@@ -270,7 +276,7 @@ function EndSession()
 end
 
 -- ###########################################################################
--- ## API
+-- ## CoinTracking API
 -- ###########################################################################
 
 local function CoinTrackingRequest(args)
