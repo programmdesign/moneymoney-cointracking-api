@@ -1,4 +1,4 @@
--- Inofficial CoinTracking Extension (www.cointracking.info) for MoneyMoney
+-- Inofficial MoneyMoney Extension for the CoinTracking API (www.cointracking.info)
 -- Version 1.0
 -- License: MIT
 -- Author: Christoph Neumann (@programmdesign), Gemini, ChatGPT
