@@ -1,5 +1,5 @@
 -- Inofficial CoinTracking Extension (www.cointracking.info) for MoneyMoney
--- Version 1.1
+-- Version 1.0
 -- License: MIT
 -- Author: Christoph Neumann (@programmdesign), Gemini, ChatGPT
 -- 
@@ -16,14 +16,8 @@ WebBanking{
 
 }
 
--- ###########################################################################
--- ## Variable declaration
--- ###########################################################################
-
 local apiKey
 local apiSecret
-
--- Dictionary for mapping CoinTrackings crypto currency symbols to cryptocurrency names
 local cryptoCurrencies = {
     ["1INCH"] = "1inch Network",
     ["AAVE"] = "Aave",
@@ -218,32 +212,13 @@ local cryptoCurrencies = {
     ["ZRX"] = "0x"
 }
 
+
 -- ###########################################################################
 -- ## Helpers
 -- ###########################################################################
 
--- Encode MM.hmac512 binary data to hexadecimal data
 local function ToHex(bin)
   return (bin:gsub(".", function(c) return string.format("%02x", string.byte(c)) end))
-end
-
--- Safe String and number conversion for nodes, strings, numbers
-local function ToString(v)
-  if v == nil then return "" end
-  local t = type(v)
-  if t == "string" then return v end
-  if t == "number" then return tostring(v) end
-  if t == "userdata" and v.string then return v:string() end
-  return tostring(v)
-end
-
-local function ToNumber(v)
-  if v == nil then return 0 end
-  local t = type(v)
-  if t == "number" then return v end
-  if t == "string" then return tonumber(v) or 0 end
-  if t == "userdata" and v.string then return tonumber(v:string()) or 0 end
-  return tonumber(v) or 0
 end
 
 -- ###########################################################################
@@ -276,7 +251,7 @@ function EndSession()
 end
 
 -- ###########################################################################
--- ## CoinTracking API
+-- ## API
 -- ###########################################################################
 
 local function CoinTrackingRequest(args)
@@ -325,26 +300,22 @@ end
 function GetBalances()
   local resp = CoinTrackingRequest({ method = "getGains" }):dictionary()["gains"]
 
-  local accountCurrency = ToString(resp["account_currency"])
+  local accountCurrency = tostring(resp["account_currency"])
   if accountCurrency == "" then accountCurrency = "EUR" end
 
   local balances = {}
 
   for k, v in pairs(resp) do
     local balance = {}
-    balance["name"] = (cryptoCurrencies[ToString(v["coin"])] or ToString(v["coin"])) .. " (" .. v["coin"] .. ")"
-    balance["quantity"] = ToNumber(v["amount"])
-    balance["purchasePrice"] = ToNumber(v["cost_per_unit"])
-    balance["price"] = ToNumber(v["current_price"])
-    balance["amount"] = ToNumber(v["current_value"])
+    balance["name"] = (cryptoCurrencies[tostring(v["coin"])] or tostring(v["coin"])) .. " (" .. v["coin"] .. ")"
+    balance["quantity"] = tonumber(v["amount"])
+    balance["purchasePrice"] = tonumber(v["cost_per_unit"])
+    balance["price"] = tonumber(v["current_price"])
+    balance["amount"] = tonumber(v["current_value"])
     balance["currencyOfPrice"] = string.upper(accountCurrency)
     balance["currencyOfPurchasePrice"] = string.upper(accountCurrency)
     balances[#balances+1] = balance
   end
 
   return balances
-end
-
-function GetTransactions(since)
-  return {}
 end
