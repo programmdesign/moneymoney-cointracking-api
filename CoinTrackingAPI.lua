@@ -1,4 +1,4 @@
--- Inofficial MoneyMoney Extension for the CoinTracking API (www.cointracking.info)
+-- Inofficial CoinTracking Extension (www.cointracking.info) for MoneyMoney
 -- Version 1.0
 -- License: MIT
 -- Author: Christoph Neumann (@programmdesign), Gemini, ChatGPT
@@ -307,14 +307,16 @@ function GetBalances()
 
   for k, v in pairs(resp) do
     local balance = {}
-    balance["name"] = (cryptoCurrencies[tostring(v["coin"])] or tostring(v["coin"])) .. " (" .. v["coin"] .. ")"
-    balance["quantity"] = tonumber(v["amount"])
-    balance["purchasePrice"] = tonumber(v["cost_per_unit"])
-    balance["price"] = tonumber(v["current_price"])
-    balance["amount"] = tonumber(v["current_value"])
-    balance["currencyOfPrice"] = string.upper(accountCurrency)
-    balance["currencyOfPurchasePrice"] = string.upper(accountCurrency)
-    balances[#balances+1] = balance
+    if tonumber(v["current_value"]) > 0 then
+      balance["name"] = (cryptoCurrencies[tostring(v["coin"])] or tostring(v["coin"])) .. " (" .. v["coin"] .. ")"
+      balance["quantity"] = tonumber(v["amount"])
+      balance["purchasePrice"] = tonumber(v["cost_per_unit"])
+      balance["price"] = tonumber(v["current_price"])
+      balance["amount"] = tonumber(v["current_value"])
+      balance["currencyOfPrice"] = string.upper(accountCurrency)
+      balance["currencyOfPurchasePrice"] = string.upper(accountCurrency)
+      balances[#balances+1] = balance
+    end
   end
 
   return balances
