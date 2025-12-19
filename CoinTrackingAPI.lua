@@ -1,5 +1,5 @@
 -- Inofficial CoinTracking Extension (www.cointracking.info) for MoneyMoney
--- Version 1.0
+-- Version 1.01
 -- License: MIT
 -- Author: Christoph Neumann (@programmdesign), Gemini, ChatGPT
 -- 
@@ -307,7 +307,7 @@ function GetBalances()
 
   for k, v in pairs(resp) do
     local balance = {}
-    if tonumber(v["current_value"]) > 0 then
+    if tonumber(v["amount"]) > 0 then
       balance["name"] = (cryptoCurrencies[tostring(v["coin"])] or tostring(v["coin"])) .. " (" .. v["coin"] .. ")"
       balance["quantity"] = tonumber(v["amount"])
       balance["purchasePrice"] = tonumber(v["cost_per_unit"])
